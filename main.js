@@ -45,7 +45,7 @@ var geolocationControl = new Control({
 
 let isGeolocationActive = false;
 geolocationBtn.onclick = function(event){
-  console.log("event-taraget: ", event.target);
+ // console.log("event-taraget: ", event.target);
   
  
   if(!isGeolocationActive){
@@ -61,7 +61,7 @@ geolocationBtn.onclick = function(event){
      stopAutolocate();
     isGeolocationActive = !isGeolocationActive;
   }
-  console.log("event-Currentarget: ", event.currentTarget);
+//  console.log("event-Currentarget: ", event.currentTarget);
 
 }
 
@@ -147,7 +147,7 @@ function startAutolocate(){
     var coordinates = geolocation.getPosition();
     positions.push(coordinates);
     if(localStorage.getItem("positions"))localStorage.removeItem("positions");
-    localStorage.setItem("positions",positions);
+    localStorage.setItem("positions",JSON.stringify(positions));
     var accuracy = geolocation.getAccuracyGeometry();
     
     positionFeature.setGeometry(coordinates ?  new Point(coordinates) : null); 
