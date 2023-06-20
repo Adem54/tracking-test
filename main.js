@@ -97,6 +97,7 @@ const geolocation = new Geolocation({
 });
 
 var positionFeature = new Feature();
+
 positionFeature.setStyle(
   new Style({
     image:new CircleStyle({
@@ -131,6 +132,8 @@ geolocation.on('error', function(evt) {
   window.console.log(evt.message);
 });
 
+let count=0;
+let positions = [];
 
 function startAutolocate(){
   var coordinates = geolocation.getPosition();
@@ -139,8 +142,14 @@ function startAutolocate(){
   mapView.setZoom(16);
   accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   intervalAutolocate = setInterval(function(){
+    count++;
+    
     var coordinates = geolocation.getPosition();
+    positions.push(coordinates);
+    if(localStorage.getItem("positions"))localStorage.removeItem("positions");
+    localStorage.setItem("positions",positions);
     var accuracy = geolocation.getAccuracyGeometry();
+    
     positionFeature.setGeometry(coordinates ?  new Point(coordinates) : null); 
     map.getView().setCenter(coordinates);
     mapView.setZoom(16);
